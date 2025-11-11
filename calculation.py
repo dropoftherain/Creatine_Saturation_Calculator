@@ -44,9 +44,9 @@ def simulate_creatine(WEIGHT, SEX, ACTIVITY_LEVEL, TIME_OF_SIMULATION_IN_DAYS, T
         X_A, X_P, X_M = S
         C_P = X_P / c.V_D                                                   # Plasma concentration [mg/L]
         absorption = c.V_MAX * X_A / (c.K_M + X_A)
-        muscle_uptake = (c.V_MAX_M * C_P)/(c.K_M_M + C_P)
+        muscle_uptake = (c.V_MAX_M * C_P) / (c.K_M_M + C_P)
         # muscle_uptake *= (1 - X_M / Cr_max)                               # Too much of a slow down when getting closer to saturation
-        muscle_uptake *= (1 - (X_M / CR_MAX)**1.5)
+        muscle_uptake *= (1 - (X_M / CR_MAX) ** 1.5)
         dXAdt = - absorption
         # renal_clearance = 8                                               # Renal clearance [L/h], possibly add when 80% saturation
         # dXPdt = absorption - k_e * X_P - muscle_uptake - renal_clearance * C_P
