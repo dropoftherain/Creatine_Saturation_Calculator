@@ -83,7 +83,14 @@ def simulate_creatine(WEIGHT, SEX, ACTIVITY_LEVEL, TIME_OF_SIMULATION_IN_DAYS, T
     return concatenated_time, concatenated_solution, M_ALL_MUSCLES_KG, C_M[-1]
 
 def visualize(TIME, SOLUTION):
-    pass
+    X_A_sol, X_P_sol, X_M_sol = SOLUTION.T
+    fig_M, ax = plt.subplots()
+    ax.plot(TIME, X_M_sol, label='Muscle amount (X_M)')
+    ax.set_xlabel('Time [h]')
+    ax.set_ylabel('Creatine Concentration C_M [mmol.kg-1]')
+    ax.set_title("Creatine Concentration in Muscle")
+    ax.legend()
+    return fig_M
 
     # print(f"All dry muscles in kg: {M_ALL_MUSCLES_KG}")
     # print(f"Initial amount of creatine: {X_M_0}")

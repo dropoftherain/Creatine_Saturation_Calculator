@@ -5,6 +5,7 @@ from scipy.integrate import odeint
 import pandas as pd
 from calculation import test_import
 from calculation import simulate_creatine
+from calculation import visualize
 import constants as c
 
 st.title('Creatine Saturation Calculator')
@@ -27,9 +28,20 @@ loading_dose = 1000*(st.number_input("Loading dose of creatine in grams", min_va
 keeping_dose = 1000*(st.number_input("Keeping dose of creatine in grams", min_value=5, max_value=10, key="keeping_dose_key")) 
 
 # st.write(st.session_state.weight_key)
-st.write("Total hours of simulation", test_import(time_of_simulation, time_between_doses))
 
-# Trying if the simulation runs
-conc_t, conc_s, m_all_muscles_kg, C_M_end = simulate_creatine(weight, sex, activity_level, time_of_simulation, time_between_doses, loading_phase, loading_dose, keeping_dose)
-st.write("Dry muscles in kg", round(m_all_muscles_kg, 2))
-st.write("Ending creatine muscle concentration in mmol/kg", round(C_M_end, 2))
+# SIMULATION
+def simulation(args):
+    conc_t, conc_s, m_all_muscles_kg, C_M_end = simulate_creatine(*args)
+    fig = visualize(conc_t, conc_s)
+    st.write("Total hours of simulation", test_import(time_of_simulation, time_between_doses))
+    st.write("Dry muscles in kg", round(m_all_muscles_kg, 2))
+    st.write("Ending creatine muscle concentration in mmol/kg", round(C_M_end, 2))
+    st.pyplot(fig, True)
+
+args = weight, sex, activity_level, time_of_simulation, time_between_doses, loading_phase, loading_dose, keeping_dose
+if st.button("Simulate"):
+    simulation(args)
+else:
+    st.write("Press \"Simulate\"")
+
+
